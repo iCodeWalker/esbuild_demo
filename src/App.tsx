@@ -1,26 +1,57 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect, useRef } from "react";
+import * as esbuild from "esbuild-wasm";
+import { unpkgPathPlugin } from "./plugins/unpkg-path-plugin";
 
-function App() {
+const App = () => {
+  const ref = useRef<any>();
+  const [input, setInput] = useState<string>("");
+  const [codeOutput, setCodeOutput] = useState<string>("");
+
+  const startService = async () => {
+    ref.current = await esbuild.startService({
+      worker: true,
+      wasmURL: "/esbuild.wasm",
+    });
+  };
+
+  useEffect(() => {
+    startService();
+  }, []);
+
+  const onSubmitCode = async () => {
+    if (!ref.current) {
+      return;
+    }
+
+    //----- This transform function is used for tanspiling the jsx code into simple js ------
+    // const result = await ref.current.transform(input, {
+    //   loader: "jsx",
+    //   target: "es2015",
+    // });
+
+    const result = await ref.current.build({
+      entryPoints: ["index.js"],
+      bundle: true,
+      write: false,
+      plugins: [unpkgPathPlugin()],
+    });
+
+    console.log(result);
+    setCodeOutput(result.outputFiles[0].text);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <textarea
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+      ></textarea>
+      <div>
+        <button onClick={onSubmitCode}>Submit</button>
+      </div>
+      <pre>{codeOutput}</pre>
     </div>
   );
-}
+};
 
 export default App;
