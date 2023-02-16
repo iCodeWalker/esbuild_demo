@@ -24,6 +24,7 @@ const App = () => {
     }
 
     //----- This transform function is used for tanspiling the jsx code into simple js ------
+
     // const result = await ref.current.transform(input, {
     //   loader: "jsx",
     //   target: "es2015",
@@ -34,6 +35,10 @@ const App = () => {
       bundle: true,
       write: false,
       plugins: [unpkgPathPlugin()],
+      define: {
+        "process.env.NODE_ENV": '"production"',
+        global: "window",
+      },
     });
 
     console.log(result);
