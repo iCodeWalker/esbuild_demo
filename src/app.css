@@ -1,0 +1,36 @@
+.textarea-style {
+  background-color: #252525;
+  padding: 16px;
+  height: 100%;
+  width: 90%;
+  color: whitesmoke;
+  font-size: 14p;
+  resize: none;
+  border: 2px solid green;
+  border-radius: 10px;
+  z-index: 5;
+  box-shadow: 0 0 25px #4d4c4c;
+  margin-top: 10px;
+}
+
+.text-style {
+  color: #fff;
+  text-align: center;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: #47cf73;
+  z-index: 3;
+  color: #000000;
+  border-radius: 10px;
+  cursor: pointer;
+}

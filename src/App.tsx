@@ -3,8 +3,11 @@ import * as esbuild from "esbuild-wasm";
 import { unpkgPathPlugin } from "./plugins/unpkg-path-plugin";
 import { fetchPlugin } from "./plugins/fetch-plugin";
 
+import "./app.css";
+
 const App = () => {
   const ref = useRef<any>();
+
   const [input, setInput] = useState<string>("");
   const [codeOutput, setCodeOutput] = useState<string>("");
 
@@ -42,20 +45,33 @@ const App = () => {
       },
     });
 
-    console.log(result);
-    setCodeOutput(result.outputFiles[0].text);
+    setCodeOutput(result.outputFiles[0].text); // Our transpiled and bundled code
   };
 
   return (
-    <div>
-      <textarea
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-      ></textarea>
-      <div>
-        <button onClick={onSubmitCode}>Submit</button>
+    <div style={{ margin: 16 }}>
+      <div style={{ textAlign: "center", margin: 16 }}>
+        <h1 className="text-style">Transpile and Bundle</h1>
+        <h4 className="text-style">
+          See transpiled and bundled JavaScript code here
+        </h4>
+        <textarea
+          rows={20}
+          placeholder="Enter your code here"
+          className="textarea-style"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+        />
       </div>
-      <pre>{codeOutput}</pre>
+
+      <div className="btn-container">
+        <button className="btn" onClick={onSubmitCode}>
+          Submit
+        </button>
+      </div>
+      <div>
+        <pre style={{ color: "#fff", marginLeft: "5rem" }}>{codeOutput}</pre>
+      </div>
     </div>
   );
 };
