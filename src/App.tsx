@@ -56,7 +56,7 @@ const App = () => {
           See transpiled and bundled JavaScript code here
         </h4>
         <textarea
-          rows={20}
+          rows={25}
           placeholder="Enter your code here"
           className="textarea-style"
           value={input}
@@ -69,7 +69,7 @@ const App = () => {
           Submit
         </button>
       </div>
-      <div>
+      <div style={{ marginBottom: 50, paddingBottom: 100 }}>
         <pre style={{ color: "#fff", marginLeft: "5rem" }}>{codeOutput}</pre>
       </div>
     </div>
